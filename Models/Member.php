@@ -1,25 +1,23 @@
 <?php
 
 class Member {
-    private $idMember;
     private $licenseNumber;
     private $firstName;
     private $lastName;
     private $contact;
+    private $category;
 
-    public function __construct($idMember,$licenseNumber, $firstName, $lastName, $contact) {
-        $this->idMember = $idMember;
+    public function __construct($licenseNumber, $firstName, $lastName, Contact $contact, Category $category) {
         $this->licenseNumber = $licenseNumber;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->contact = $contact;
+        $this->category = $category;
     }
+
 
     
-
-    public function getIdMember() {
-        return $this->idMember;
-    }
+    // Getters and Setters
     public function getLicenseNumber() {
         return $this->licenseNumber;
     }
@@ -34,5 +32,9 @@ class Member {
 
     public function getContact() {
         return $this->contact;
+    }
+
+    public function getCategory() {
+        return $this->category;
     }
 }

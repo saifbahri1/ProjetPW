@@ -8,19 +8,17 @@ class CategoryDAO {
     public function __construct($conn) {
         $this->conn = $conn;
     }
-// Méthode pour insérer une nouvelle catégorie dans la base de données
+ // Méthode pour insérer une nouvelle catégorie dans la base de données
 public function create(Category $category) {
     try {
-        $stmt = $this->conn->prepare("INSERT INTO categories (name, shortCode) VALUES (?, ?)");
-        $stmt->execute([$category->getName(), $category->getShortCode()]);
+        $stmt = $this->conn->prepare("INSERT INTO categories (name) VALUES (?)");
+        $stmt->execute([$category->getName()]);
         return true;
     } catch (PDOException $e) {
-        
-        error_log($e->getMessage());
+        // Gérer les erreurs d'insertion ici
         return false;
     }
 }
-
 // Méthode pour récupérer toutes les catégories de la base de données
 public function getAll() {
     try {
@@ -33,7 +31,8 @@ public function getAll() {
 
         return $contacts;
     } catch (PDOException $e) {
-        return false;
+        // GÃ©rer les erreurs de rÃ©cupÃ©ration ici
+        return [];
     }
 }
 
@@ -43,11 +42,37 @@ public function getById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM categories WHERE id = ?");
         $stmt->execute([$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
-        return $stmt->fetch();
-    } catch (PDOException $e) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Category($row['id'],$row['name'], $row['shortCode']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
+        // Gérer les erreurs de récupération ici
         return false;
     }
 }
+
+public function getByname($name) {
+    try {
+        $stmt = $this->conn->prepare("SELECT * FROM categories WHERE name = ?");
+        $stmt->execute([$name]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Category($row['id'],$row['name'], $row['shortCode']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
+        // Gérer les erreurs de récupération ici
+        return false;
+    }
+}
+
+
+
 // Méthode pour mettre à jour une catégorie
 public function update(Category $category) {
     try {
@@ -55,16 +80,18 @@ public function update(Category $category) {
         $stmt->execute([$category->getName(), $category->getIdCategory()]);
         return true;
     } catch (PDOException $e) {
+        // Gérer les erreurs de mise à jour ici
         return false;
     }
 }
 // Méthode pour supprimer une catégorie
-public function delete($id) {
+public function delete(Category $category) {
     try {
         $stmt = $this->conn->prepare("DELETE FROM categories WHERE id = ?");
-        $stmt->execute([$id]);
+        $stmt->execute([$category->getIdCategory()]);
         return true;
     } catch (PDOException $e) {
+        // Gérer les erreurs de suppression ici
         return false;
     }
 }

@@ -8,27 +8,17 @@ class MemberDAO {
         $this->conn = $conn;
     }
 
-    // Méthode pour insérer un nouveau membre dans la base de données
     public function create(Member $member) {
         try {
-            // Assurez-vous que la table `members` existe et contient les colonnes nécessaires
-            $stmt = $this->conn->prepare("INSERT INTO members (licenseNumber, firstName, lastName) VALUES (?, ?, ?)");
-            $stmt->execute([$member->getLicenseNumber(), $member->getFirstName(), $member->getLastName()]);
-
-            // Récupérez l'ID du membre nouvellement inséré
-            $memberId = $this->conn->lastInsertId();
-
-            // Insérez les détails de contact dans la table `contacts`
-            $contact = $member->getContact();
-            $stmt = $this->conn->prepare("INSERT INTO contacts (memberId, email, phoneNumber) VALUES (?, ?, ?)");
-            $stmt->execute([$memberId, $contact->getEmail(), $contact->getPhoneNumber()]);
-
+            $stmt = $this->conn->prepare("INSERT INTO members (license_number, first_name, last_name, contact_id, category_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$member->getLicenseNumber(), $member->getFirstName(), $member->getLastName(), $member->getContact()->getId(), $member->getCategory()->getId()]);
             return true;
         } catch (PDOException $e) {
-            // Gérer les erreurs d'insertion ici
+            // Gérer les erreurs d'insertion ici (par exemple, numéro de licence déjà existant)
             return false;
         }
     }
+    
     // Méthode pour récupérer tous les membres de la base de données
 public function getAll() {
     try {
