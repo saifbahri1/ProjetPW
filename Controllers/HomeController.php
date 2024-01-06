@@ -13,6 +13,7 @@ print_r($contacts);
     }
 }
 
+
 require ("/xampp/htdocs/adminApp/config.php");
 require_once("/xampp/htdocs/adminApp/Models/Category.php");
 require_once("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");

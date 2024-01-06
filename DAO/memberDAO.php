@@ -58,13 +58,12 @@ public function update(Member $member) {
     try {
         // Assurez-vous que la table `members` existe et contient les colonnes nécessaires
         $stmt = $this->conn->prepare("UPDATE members SET licenseNumber = ?, firstName = ?, lastName = ? WHERE id = ?");
-        $stmt->execute([$member->getLicenseNumber(), $member->getFirstName(), $member->getLastName(), $member->getIdMember()]);
+        $stmt->execute([$member->getLicenseNumber(), $member->getFirstName(), $member->getLastName(), $member->getLicenseNumber()]);
 
         // Mettre à jour les détails de contact dans la table `contacts`
         $contact = $member->getContact();
         $stmt = $this->conn->prepare("UPDATE contacts SET email = ?, phoneNumber = ? WHERE memberId = ?");
-        $stmt->execute([$contact->getEmail(), $contact->getPhoneNumber(), $member->getIdMember()]);
-
+        $stmt->execute([$contact->getEmail(), $contact->getPhoneNumber(), $member->getLicenseNumber()]);
         return true;
     } catch (PDOException $e) {
         // Gérer les erreurs de mise à jour ici
@@ -78,11 +77,11 @@ public function delete(Member $member) {
     try {
         // Supprimer les détails de contact dans la table `contacts`
         $stmt = $this->conn->prepare("DELETE FROM contacts WHERE memberId = ?");
-        $stmt->execute([$member->getIdMember()]);
+        $stmt->execute([$member->getLicenseNumber()]);
 
         // Supprimer le membre de la table `members`
         $stmt = $this->conn->prepare("DELETE FROM members WHERE id = ?");
-        $stmt->execute([$member->getIdMember()]);
+        $stmt->execute([$member->getLicenseNumber()]);
 
         return true;
     } catch (PDOException $e) {

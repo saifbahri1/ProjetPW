@@ -1,7 +1,6 @@
-use Contact;
 <?php
 
-class CategoryDAO {
+class ContactDAO {
     private $conn;
 
     public function __construct($conn) {
@@ -33,18 +32,23 @@ public function getAll() {
     }
 }
 // Méthode pour récupérer un contact par son id
-public function getById($id) {
+public function getByEmail($email) {
     try {
-        $stmt = $this->conn->prepare("SELECT * FROM contacts WHERE id = ?");
-        $stmt->execute([$id]);
+        $stmt = $this->conn->prepare("SELECT * FROM contacts WHERE email = ?");
+        $stmt->execute([$email]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Contact');
-        return $stmt->fetch();
-    } catch (PDOException $e) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+
+        if ($row) {
+            return new Contact($row['id'],$row['firstname'], $row['lastname'],$row['email'],$row['phonenumber']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
         // Gérer les erreurs de récupération ici
         return false;
     }
 }
-
 // Méthode pour mettre à jour un contact
 public function update(Contact $contact) {
     try {

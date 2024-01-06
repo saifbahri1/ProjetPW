@@ -42,12 +42,37 @@ public function getById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM categories WHERE id = ?");
         $stmt->execute([$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
-        return $stmt->fetch();
-    } catch (PDOException $e) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Category($row['id'],$row['name'], $row['shortCode']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
         // Gérer les erreurs de récupération ici
         return false;
     }
 }
+
+public function getByname($name) {
+    try {
+        $stmt = $this->conn->prepare("SELECT * FROM categories WHERE name = ?");
+        $stmt->execute([$name]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Category($row['id'],$row['name'], $row['shortCode']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
+        // Gérer les erreurs de récupération ici
+        return false;
+    }
+}
+
+
+
 // Méthode pour mettre à jour une catégorie
 public function update(Category $category) {
     try {
