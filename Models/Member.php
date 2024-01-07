@@ -14,8 +14,12 @@ class Member {
         $this->contact = $contact;
         $this->category = $category;
     }
+
     
 
+    public function getIdMember() {
+        return $this->idMember;
+    }
     public function getLicenseNumber() {
         return $this->licenseNumber;
     }
