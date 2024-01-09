@@ -23,4 +23,15 @@ class Category {
     public function getShortCode() {
         return $this->shortCode;
     }
+    public function setIdCategory($id) {
+        $this->idCategory=$id;
+    }
+
+    public function setName($name) {
+     $this->name=$name;
+    }
+
+    public function setShortCode($shortCode) {
+        $this->shortCode=$shortCode;
+    }
 }

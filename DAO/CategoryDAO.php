@@ -1,4 +1,5 @@
 <?php
+include("/xampp/htdocs/adminApp/Models/Category.php");  
 
 
 
@@ -11,8 +12,8 @@ class CategoryDAO {
  // Méthode pour insérer une nouvelle catégorie dans la base de données
 public function create(Category $category) {
     try {
-        $stmt = $this->conn->prepare("INSERT INTO categories (name) VALUES (?)");
-        $stmt->execute([$category->getName()]);
+        $stmt = $this->conn->prepare("INSERT INTO categories (name,shortCode) VALUES (?,?)");
+        $stmt->execute([$category->getName(),$category->getShortCode()]);
         return true;
     } catch (PDOException $e) {
         // Gérer les erreurs d'insertion ici
@@ -76,8 +77,8 @@ public function getByname($name) {
 // Méthode pour mettre à jour une catégorie
 public function update(Category $category) {
     try {
-        $stmt = $this->conn->prepare("UPDATE categories SET name = ? WHERE id = ?");
-        $stmt->execute([$category->getName(), $category->getIdCategory()]);
+        $stmt = $this->conn->prepare("UPDATE categories SET name = ?,shortcode=? WHERE id = ?");
+        $stmt->execute([$category->getName(),$category->getShortCode(), $category->getIdCategory()]);
         return true;
     } catch (PDOException $e) {
         // Gérer les erreurs de mise à jour ici
@@ -85,10 +86,10 @@ public function update(Category $category) {
     }
 }
 // Méthode pour supprimer une catégorie
-public function delete(Category $category) {
+public function deleteById($id) {
     try {
         $stmt = $this->conn->prepare("DELETE FROM categories WHERE id = ?");
-        $stmt->execute([$category->getIdCategory()]);
+        $stmt->execute([$id]);
         return true;
     } catch (PDOException $e) {
         // Gérer les erreurs de suppression ici

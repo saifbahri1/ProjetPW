@@ -8,6 +8,15 @@
 body{
     background: #e4e9f7;
 }
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 4.5rem);
+    background: linear-gradient(to bottom, rgb(0 0 0 / 80%) 0%, rgb(0 0 0 / 80%) 100%), url("../assets/img/bg-masthead.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+  }
 .container{
     display: flex;
     align-items: center;

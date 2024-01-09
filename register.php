@@ -5,7 +5,6 @@ include("/xampp/htdocs/adminApp/config.php");
 include("/xampp/htdocs/adminApp/Models/Coach.php");  
 include("/xampp/htdocs/adminApp/Models/Contact.php"); 
 include("/xampp/htdocs/adminApp/DAO/CoachDAO.php");  
-include("/xampp/htdocs/adminApp/Models/Category.php");  
 include("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
 
 $CategoryDAO = new CategoryDAO($conn);
@@ -97,7 +96,7 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <div class="field">
-                    <input type="submit" class="btn" name="submit" value="Register" required>
+                    <input type="submit" style="background-color:#0d6efd!important" class="btn" name="submit" value="Register" required>
                 </div>
                 <div class="links">
                     Already a member? <a href="index.php">Sign In</a>

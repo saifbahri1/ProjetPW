@@ -16,10 +16,6 @@ class Member {
     }
 
     
-
-    public function getIdMember() {
-        return $this->idMember;
-    }
     public function getLicenseNumber() {
         return $this->licenseNumber;
     }
