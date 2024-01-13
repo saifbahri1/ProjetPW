@@ -48,7 +48,7 @@
                     }
                 } else {
             ?>
-            <header>Login</header>
+            <header>Se Connecter</header>
             <form action="" method="post">
                 <div class="field input">
                     <label for="email">Email</label>
@@ -56,15 +56,15 @@
                 </div>
 
                 <div class="field input">
-                    <label for="password">Password</label>
+                    <label for="password">Mot de passe </label>
                     <input type="password" name="password" id="password" autocomplete="off" required>
                 </div>
 
                 <div class="field">
-                    <input type="submit" class="btn" style="background-color:#0d6efd!important" name="submit" value="Login" required>
+                    <input type="submit" class="btn" style="background-color:#0d6efd!important" name="submit" value="Se connecter" required>
                 </div>
                 <div class="links">
-                    Don't have an account? <a href="register.php">Sign Up Now</a>
+                    Vous n'avez pas de compte? <a href="register.php">S'inscrire</a>
                 </div>
             </form>
         </div>

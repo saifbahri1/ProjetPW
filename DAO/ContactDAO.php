@@ -1,4 +1,5 @@
 <?php
+require_once("/xampp/htdocs/adminApp/Models/Contact.php");
 
 class ContactDAO {
     private $conn;
@@ -23,12 +24,15 @@ class ContactDAO {
 public function getAll() {
     try {
         $stmt = $this->conn->prepare("SELECT * FROM contacts");
-        $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Contact');
-        return $stmt->fetchAll();
+        $contacts = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $contacts[] = new Contact($row['id'],$row['firstName'], $row['lastName'],$row['email'],$row['phoneNumber']);
+        }
+
+        return $contacts;
     } catch (PDOException $e) {
-        // Gérer les erreurs de récupération ici
-        return false;
+        // GÃ©rer les erreurs de rÃ©cupÃ©ration ici
+        return [];
     }
 }
 // Méthode pour récupérer un contact par son id
@@ -41,7 +45,25 @@ public function getByEmail($email) {
         
 
         if ($row) {
-            return new Contact($row['id'],$row['firstname'], $row['lastname'],$row['email'],$row['phonenumber']);
+            return new Contact($row['id'],$row['firstName'], $row['lastName'],$row['email'],$row['phoneNumber']);
+
+    }else{return false;
+    } }catch (PDOException $e) {
+        // Gérer les erreurs de récupération ici
+        return false;
+    }
+}
+
+public function getById($id) {
+    try {
+        $stmt = $this->conn->prepare("SELECT * FROM contacts WHERE id = ?");
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Contact');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+
+        if ($row) {
+            return new Contact($row['id'],$row['firstName'], $row['lastName'],$row['email'],$row['phoneNumber']);
 
     }else{return false;
     } }catch (PDOException $e) {
@@ -72,6 +94,40 @@ public function delete(Contact $contact) {
         return false;
     }
 }
+
+
+// Méthode pour supprimer un contact par son id
+public function deleteById($idContact) {
+    try {
+        $stmt = $this->conn->prepare("DELETE FROM contacts WHERE id = ?");
+        $stmt->execute([$idContact]);
+        return true;
+    } catch (PDOException $e) {
+        // Gérer les erreurs de suppression ici
+        return false;
+    }
+}
+
+// Méthode pour récupérer le dernier id inséré
+public function getLastId() {
+    try {
+        $stmt = $this->conn->prepare("SELECT MAX(id) as max_id FROM contacts");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Vérifier si max_id est défini et non nul
+        if (isset($row['max_id'])) {
+            return $row['max_id'];
+        } else {
+            // Aucun enregistrement trouvé, peut-être que la table est vide
+            return null;
+        }
+    } catch (PDOException $e) {
+        // Gérer les erreurs de récupération ici
+        return false;
+    }
+}
+
 }
 
 ?>

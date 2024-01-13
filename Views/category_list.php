@@ -20,21 +20,21 @@
 
 <body>
     <nav class="navbar navbar-light justify-content-left fs-3 mb-5"
-        style="background-color: #0d6efd; color:white; padding-left:10px ;font-size:30px!important">
+        style="background-color: #000; color:white; padding-left:10px ;font-size:35px!important">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#page-top" style="color:white!important">Rennes Sports Club</a>
+            <a class="navbar-brand" href="../index.php" style="color:white!important">Rennes Sports Club</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                aria-label="Toggle navigation" style="background-color: white !important;"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a style="font-size: 20px!important;color:black !important; " class="nav-link"
-                            href="../adminApp/Views/category_list.php">Catégories</a></li>
-                    <li class="nav-item"><a style="font-size: 20px!important;color:black !important; " class="nav-link"
-                            href="#services">Educateurs</a></li>
-                    <li class="nav-item"><a style="font-size: 20px!important;color:black !important; " class="nav-link"
-                            href="#portfolio">Membres</a></li>
-                    <li class="nav-item"><a style="font-size: 20px!important;color:black !important; " class="nav-link"
+                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
+                            href="./category_list.php">Catégories</a></li>
+                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
+                            href="./CoachViews/coach_list.php">Educateurs</a></li>
+                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
+                            href="./MemberViews/member_list.php">Membres</a></li>
+                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
                             href="#contact">Contacts</a></li>
                 </ul>
             </div>
@@ -52,16 +52,16 @@
         }
         ?>
         <!-- Add New Category Button -->
-        <button type="button" class="btn btn-dark mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add
-            New</button>
-
+<div class="text-center">
+    <button type="button" class="btn btn-dark mb-3" style="width: 200px; display: block; margin: 0 auto;" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter</button>
+</div>
         <!-- Add Category Modal -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                        <h5 class="modal-title" id="addCategoryModalLabel">Ajouter une nouvelle catégorie</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -75,15 +75,15 @@
         <table class="table table-hover text-center">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col"> Name</th>
-                    <th scope="col">Short Code</th>
+                    <th scope="col"> Nom</th>
+                    <th scope="col">Code raccourci</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 include("/xampp/htdocs/adminApp/config.php");
-                include("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
+                require_once("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
                 
                 $CategoryDAO = new CategoryDAO($conn);
                 $categories=$CategoryDAO->getAll();
@@ -95,91 +95,91 @@
                     <td>
                         <!-- Update Button -->
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<?= $category->getIdCategory(); ?>">
-    Update
-</button>
+                            Modifier
+                        </button>
                         <!-- Delete Button -->
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $category->getIdCategory(); ?>">
-                            Delete
+                            Supprimer
                         </button>
                     </td>
                 </tr>
 
+                <!-- Update Modal -->
+                <div class="modal fade" id="updateModal<?= $category->getIdCategory(); ?>" tabindex="-1" aria-labelledby="updateModalLabel<?= $category->getIdCategory(); ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateModalLabel<?= $category->getIdCategory(); ?>">Modifier la catégorie</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Container for dynamic content -->
+                                <div id="updateFormContainer<?= $category->getIdCategory(); ?>"></div>
 
-<!-- Update Modal -->
-<div class="modal fade" id="updateModal<?= $category->getIdCategory(); ?>" tabindex="-1" aria-labelledby="updateModalLabel<?= $category->getIdCategory(); ?>" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel<?= $category->getIdCategory(); ?>">Modifier la catégorie</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Container for dynamic content -->
-                <div id="updateFormContainer"></div>
+                                <!-- JavaScript to load the update form dynamically -->
+                                <script>
+                                    // Function to load update form dynamically
+                                    function loadUpdateForm(categoryId) {
+                                        // Use AJAX to fetch the update form content
+                                        // Adjust the URL accordingly
+                                        fetch(`/adminApp/Views/category_update.php?id=${categoryId}`)
+                                            .then(response => response.text())
+                                            .then(data => {
+                                                // Set the content inside the container
+                                                document.getElementById(`updateFormContainer${categoryId}`).innerHTML = data;
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching update form:', error);
+                                            });
+                                    }
 
-                <!-- JavaScript to load the update form dynamically -->
-                <script>
-                    // Function to load update form dynamically
-                    function loadUpdateForm(categoryId) {
-                        // Use AJAX to fetch the update form content
-                        // Adjust the URL accordingly
-                        fetch(`/adminApp/Views/category_update.php?id=${categoryId}`)
-                            .then(response => response.text())
-                            .then(data => {
-                                // Set the content inside the container
-                                document.getElementById('updateFormContainer').innerHTML = data;
-                            })
-                            .catch(error => {
-                                console.error('Error fetching update form:', error);
-                            });
-                    }
+                                    // Trigger the function when the modal is shown
+                                    document.getElementById(`updateModal<?= $category->getIdCategory(); ?>`).addEventListener('shown.bs.modal', function () {
+                                        loadUpdateForm(<?= $category->getIdCategory(); ?>);
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="deleteModal<?= $category->getIdCategory(); ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $category->getIdCategory(); ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel<?= $category->getIdCategory(); ?>">Supprimer la catégorie</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Container for dynamic content -->
+                                <div id="deleteFormContainer<?= $category->getIdCategory(); ?>"></div>
 
-                    // Trigger the function when the modal is shown
-                    document.getElementById('updateModal<?= $category->getIdCategory(); ?>').addEventListener('shown.bs.modal', function () {
-                        loadUpdateForm(<?= $category->getIdCategory(); ?>);
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="deleteModal<?= $category->getIdCategory(); ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $category->getIdCategory(); ?>" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel<?= $category->getIdCategory(); ?>">Supprimer la catégorie</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Container for dynamic content -->
-                <div id="deleteFormContainer<?= $category->getIdCategory(); ?>"></div>
+                                <!-- JavaScript to load the delete form dynamically -->
+                                <script>
+                                    // Function to load delete form dynamically
+                                    function loadDeleteForm(categoryId) {
+                                        // Use AJAX to fetch the delete form content
+                                        // Adjust the URL accordingly
+                                        fetch(`/adminApp/Views/category_delete.php?id=${categoryId}`)
+                                            .then(response => response.text())
+                                            .then(data => {
+                                                // Set the content inside the container
+                                                document.getElementById(`deleteFormContainer${categoryId}`).innerHTML = data;
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching delete form:', error);
+                                            });
+                                    }
 
-                <!-- JavaScript to load the delete form dynamically -->
-                <script>
-                    // Function to load delete form dynamically
-                    function loadDeleteForm(categoryId) {
-                        // Use AJAX to fetch the delete form content
-                        // Adjust the URL accordingly
-                        fetch(`/adminApp/Views/category_delete.php?id=${categoryId}`)
-                            .then(response => response.text())
-                            .then(data => {
-                                // Set the content inside the container
-                                document.getElementById(`deleteFormContainer${categoryId}`).innerHTML = data;
-                            })
-                            .catch(error => {
-                                console.error('Error fetching delete form:', error);
-                            });
-                    }
+                                    // Trigger the function when the modal is shown
+                                    document.getElementById(`deleteModal<?= $category->getIdCategory(); ?>`).addEventListener('shown.bs.modal', function () {
+                                        loadDeleteForm(<?= $category->getIdCategory(); ?>);
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    // Trigger the function when the modal is shown
-                    document.getElementById(`deleteModal<?= $category->getIdCategory(); ?>`).addEventListener('shown.bs.modal', function () {
-                        loadDeleteForm(<?= $category->getIdCategory(); ?>);
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-</div>
                 <?php endforeach; ?>
             </tbody>
         </table>

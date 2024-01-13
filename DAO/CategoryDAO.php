@@ -1,5 +1,5 @@
 <?php
-include("/xampp/htdocs/adminApp/Models/Category.php");  
+require_once("/xampp/htdocs/adminApp/Models/Category.php");
 
 
 
@@ -77,7 +77,7 @@ public function getByname($name) {
 // Méthode pour mettre à jour une catégorie
 public function update(Category $category) {
     try {
-        $stmt = $this->conn->prepare("UPDATE categories SET name = ?,shortcode=? WHERE id = ?");
+        $stmt = $this->conn->prepare("UPDATE categories SET name = ?,shortCode=? WHERE id = ?");
         $stmt->execute([$category->getName(),$category->getShortCode(), $category->getIdCategory()]);
         return true;
     } catch (PDOException $e) {

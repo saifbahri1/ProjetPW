@@ -1,33 +1,52 @@
 <?php
-   include("/xampp/htdocs/adminApp/Models/Member.php");  // Adjust the path accordingly
+require_once("/xampp/htdocs/adminApp/Models/Member.php");
 
-class Coach extends Member {
-    private $idCoach;
+Class Coach extends Member
+{
     private $email;
     private $password;
     private $isAdmin;
 
-    public function __construct($idCoach,$licenseNumber, $firstName, $lastName, $contact, $email, $password, $isAdmin = false) {
-        parent::__construct($licenseNumber, $firstName, $lastName, $contact, $email);
-        $this->idCoach = $idCoach;
+    public function __construct($licenseNumber,$firstName, $lastName, Contact $contact, Category $category, $email, $password, $isAdmin = false)
+    {
+        parent::__construct($licenseNumber, $firstName, $lastName, $contact, $category);
         $this->email = $email;
         $this->password = $password;
         $this->isAdmin = $isAdmin;
     }
 
     // Getters and Setters
-    public function getIdCoach() {
-        return $this->idCoach;
-    }
-    public function getEmail() {
+
+    public function getEmail()
+    {
         return $this->email;
     }
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
-    public function getPassword() {
-        return $this->password;
+        return $this;
     }
 
-    public function isAdmin() {
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function isAdmin()
+    {
         return $this->isAdmin;
+    }
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
     }
 }

@@ -10,9 +10,12 @@
     
     <p>Êtes-vous sûr de vouloir supprimer la catégorie  ?</p>
     
-    <form method="post"  action="../controllers/CategoryControllers/CategoryDeleteController.php?id=<?= isset($_GET['id']) ? $_GET['id'] : ''; ?>">
-        <button type="submit">Supprimer</button>
-        <a href="index.php">Annuler</a>
+    <form method="post"  action="/adminApp/controllers/CategoryControllers/CategoryDeleteController.php?id=<?= isset($_GET['id']) ? $_GET['id'] : ''; ?>">
+        
+        <div class="btn-container">
+            <button type="submit" class="primary">Supprimer</button>
+            <button type="button" class="secondary" onclick="window.location.href='/adminApp/Views/category_list.php'">Annuler</button>
+        </div>
     </form>
 </body>
 </html>

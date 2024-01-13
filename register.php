@@ -5,7 +5,7 @@ include("/xampp/htdocs/adminApp/config.php");
 include("/xampp/htdocs/adminApp/Models/Coach.php");  
 include("/xampp/htdocs/adminApp/Models/Contact.php"); 
 include("/xampp/htdocs/adminApp/DAO/CoachDAO.php");  
-include("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
+require_once("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
 
 $CategoryDAO = new CategoryDAO($conn);
 $coachDAO = new CoachDAO($conn);
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         // Creating a Coach object
         $category = $CategoryDAO->getByName($categoryName);
         $contact = new Contact(null, $firstname, $lastname, $email, $phoneNumber);
-        $coach = new Coach(null, $firstname, $lastname, $contact, $category, $email, $password);
+        $coach = new Coach($licenseNumber, $firstname, $lastname, $contact, $category, $email, $password,$isAdmin);
 
         // Using the DAO to create a coach
         if ($coachDAO->create($coach)) {
@@ -61,11 +61,11 @@ if (isset($_POST['submit'])) {
             <header>Sign Up</header>
             <form action="" method="post">
                 <div class="field input">
-                    <label for="firstname">First Name</label>
+                    <label for="firstname">Nom</label>
                     <input type="text" name="firstname" id="firstname" autocomplete="off" required>
                 </div>
                 <div class="field input">
-                    <label for="lastname">Last Name</label>
+                    <label for="lastname">Prénom</label>
                     <input type="text" name="lastname" id="lastname" autocomplete="off" required>
                 </div>
                 <div class="field input">
@@ -73,41 +73,38 @@ if (isset($_POST['submit'])) {
                     <input type="text" name="email" id="email" autocomplete="off" required>
                 </div>
                 <div class="field input">
-                    <label for="phoneNumber">Phone number</label>
+                    <label for="phoneNumber">Numéro de téléphone</label>
                     <input type="text" name="phoneNumber" id="phoneNumber" autocomplete="off" required>
                 </div>
 
                 <div class="field input">
-                    <label for="password">Password</label>
+                    <label for="password">Mot de passe</label>
                     <input type="password" name="password" id="password" autocomplete="off" required>
                 </div>
 
-                <!-- Dynamic dropdown for categories -->
                 <div class="field select">
-                    <label for="category">Category</label>
-                    <select name="category" id="category" required>
-                        <?php
-                        $categories = $CategoryDAO->getAll();
-                        foreach ($categories as $category) {
-                            echo "<option>" . $category->getName() . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+            <label for="category">Catégorie</label>
+            <select name="category" id="category" required>
+                <?php
+                $categories = $CategoryDAO->getAll();
+                foreach ($categories as $category) {
+                    echo "<option>" . $category->getName() . "</option>";
+                }
+                ?>
+            </select>
+        </div>
 
                 <div class="field">
                     <input type="submit" style="background-color:#0d6efd!important" class="btn" name="submit" value="Register" required>
                 </div>
                 <div class="links">
-                    Already a member? <a href="index.php">Sign In</a>
+                    Déjà un licencié ? <a href="index.php">Se connecter</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
-        // Add your JavaScript code here if needed
-    </script>
+   
 </body>
 </html>
 <?php } ?>
