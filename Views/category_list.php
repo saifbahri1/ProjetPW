@@ -35,7 +35,7 @@
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
                             href="./MemberViews/member_list.php">Membres</a></li>
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="#contact">Contacts</a></li>
+                            href="./ContactViews/contact_list.php">Contacts</a></li>
                 </ul>
             </div>
         </div>

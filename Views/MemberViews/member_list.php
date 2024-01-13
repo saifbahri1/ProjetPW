@@ -11,19 +11,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
         crossorigin="anonymous">
+       
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        <style>
+        /* Custom styling for the title */
+        .page-title {
+            font-size: 40px;
+            font-weight: bold; /* Make the text bold */
+            color: #333; /* Choose your preferred text color */
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
 <nav class="navbar navbar-light justify-content-left fs-3 mb-5"
         style="background-color: #000; color:white; padding-left:10px ;font-size:35px!important">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/index.php" style="color:white!important">Rennes Sports Club</a>
+            <a class="navbar-brand" href="/adminApp/index.php" style="color:white!important">Rennes Sports Club</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation" style="background-color: white !important;"><span class="navbar-toggler-icon"></span></button>
@@ -36,7 +45,7 @@
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
                             href="../MemberViews/member_list.php">Membres</a></li>
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="#contact">Contacts</a></li>
+                            href="../ContactViews/contact_list.php">Contacts</a></li>
                 </ul>
             </div>
         </div>
@@ -53,9 +62,11 @@
             </div>';
         }
         ?>
+        <h2 class="page-title text-center">Gestion des licenciés</h2>
+
         <!-- Add New Member Button -->
         <div class="text-center">
-    <button type="button" class="btn btn-dark mb-3" style="width: 200px; display: block; margin: 0 auto;" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter</button>
+    <button type="button" class="btn btn-dark mb-3" style="width: 120px; display: block; margin: 0 auto;" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter</button>
 </div>
         <!-- Add Member Modal -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
@@ -136,7 +147,7 @@
                     function loadUpdateForm(licenseNumber) {
                         // Use AJAX to fetch the update form content
                         // Adjust the URL accordingly
-                        fetch(`/adminApp/Views/Memberviews/member_update.php?licenseNumber=${licenseNumber}`)
+                        fetch(`/adminApp/Views/MemberViews/member_update.php?licenseNumber=${licenseNumber}`)
                             .then(response => response.text())
                             .then(data => {
                                 // Set the content inside the container

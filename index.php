@@ -30,7 +30,7 @@
                         <li class="nav-item"><a class="nav-link" href="../adminApp/Views/category_list.php">Catégories</a></li>
                         <li class="nav-item"><a class="nav-link" href="../adminApp/Views/CoachViews/coach_list.php">Educateurs</a></li>
                         <li class="nav-item"><a class="nav-link" href="../adminApp/Views/MemberViews/member_list.php">Membres</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contacts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../adminApp/Views/ContactViews/contact_list.php">Contacts</a></li>
                     </ul>
                 </div>
             </div> 

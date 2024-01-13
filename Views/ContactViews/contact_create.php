@@ -1,3 +1,7 @@
+
+<?php
+include("/xampp/htdocs/adminApp/config.php");
+?>
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -69,19 +73,30 @@
 </head>
 
 <body>
-    <h1>Ajouter une catégorie</h1>
-    <form method="post" action="../controllers/CategoryControllers/CategoryCreateController.php">
+    <h1>Ajouter un contact</h1>
+    <form method="post" action="/adminApp/Controllers/ContactControllers/ContactCreateController.php">
+    <div class="field input">
+                    <label for="firstName">Nom</label>
+                    <input type="text" name="firstName" id="firstName" >
+                </div>
 
-        <label for="name">Nom</label>
-        <input type="text" name="name" id="name" required>
-
-        <label for="shortCode">Code</label>
-        <input type="text" name="shortCode" id="shortCode" required>
+                <div class="field input">
+                    <label for="lastName">Prénom</label>
+                    <input type="text" name="lastName" id="lastName" >
+                </div>
+                <div class="field input">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" >
+                </div>
+                <div class="field input">
+                    <label for="phoneNumber">Numéro de téléphone</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber" >
+                </div>
 
         <div class="btn-container">
             <button type="submit" class="primary">Ajouter</button>
-            <button type="button" class="secondary" onclick="window.location.href='/adminApp/Views/category_list.php'">Annuler</button>
-        </div>
+            <button type="button" class="secondary" onclick="window.location.href='/adminApp/Views/ContactViews/contact_list.php'">Annuler</button>
+        </div> 
 
     </form>
 </body>

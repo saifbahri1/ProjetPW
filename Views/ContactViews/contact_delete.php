@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supprimer le licencié</title>
+    <title>Supprimer le contact</title>
 </head>
 <body>
-    <h1>Supprimer le licencié</h1>
+    <h1>Supprimer le contact</h1>
     
-    <p>Êtes-vous sûr de vouloir supprimer ce licencié  ?</p>
+    <p>Êtes-vous sûr de vouloir supprimer ce contact ?</p>
     
-    <form method="post"  action="/adminApp/Controllers/MemberControllers/MemberDeleteController.php/?licenseNumber=<?= isset($_GET['licenseNumber']) ? $_GET['licenseNumber'] : ''; ?>">
-       
+    <form method="post"  action="/adminApp/Controllers/ContactControllers/ContactDeleteController.php?idContact=<?=isset($_GET['idContact']) ? $_GET['idContact'] : ''; ?>">
         <div class="btn-container">
             <button type="submit" class="primary">Supprimer</button>
-            <button type="button" class="secondary" onclick="window.location.href='/adminApp/Views/MemberViews/member_list.php'">Annuler</button>
+            <button type="button" class="secondary" onclick="window.location.href='/adminApp/Views/ContactViews/contact_list.php'">Annuler</button>
         </div>
 
     </form>

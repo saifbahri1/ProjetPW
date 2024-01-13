@@ -24,7 +24,7 @@
 <nav class="navbar navbar-light justify-content-left fs-3 mb-5"
         style="background-color: #000; color:white; padding-left:10px ;font-size:35px!important">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/index.php" style="color:white!important">Rennes Sports Club</a>
+            <a class="navbar-brand" href="/adminApp/index.php" style="color:white!important">Rennes Sports Club</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation" style="background-color: white !important;"><span class="navbar-toggler-icon"></span></button>
@@ -37,7 +37,7 @@
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
                             href="../MemberViews/member_list.php">Membres</a></li>
                     <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="#contact">Contacts</a></li>
+                            href="../ContactViews/contact_list.php">Contacts</a></li>
                 </ul>
             </div>
         </div>

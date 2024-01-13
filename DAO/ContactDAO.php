@@ -20,21 +20,24 @@ class ContactDAO {
         }
     }
 
-    // Méthode pour récupérer tous les contacts de la base de données
+   // Méthode pour récupérer tous les contacts de la base de données
 public function getAll() {
     try {
         $stmt = $this->conn->prepare("SELECT * FROM contacts");
+        $stmt->execute(); // Execute the prepared statement
+
         $contacts = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $contacts[] = new Contact($row['id'],$row['firstName'], $row['lastName'],$row['email'],$row['phoneNumber']);
+            $contacts[] = new Contact($row['id'], $row['firstName'], $row['lastName'], $row['email'], $row['phoneNumber']);
         }
 
         return $contacts;
     } catch (PDOException $e) {
-        // GÃ©rer les erreurs de rÃ©cupÃ©ration ici
+        // Gérer les erreurs de récupération ici
         return [];
     }
 }
+
 // Méthode pour récupérer un contact par son id
 public function getByEmail($email) {
     try {
