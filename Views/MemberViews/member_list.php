@@ -18,7 +18,6 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
-        /* Custom styling for the title */
         .page-title {
             font-size: 40px;
             font-weight: bold; /* Make the text bold */
@@ -29,27 +28,19 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light justify-content-left fs-3 mb-5"
-        style="background-color: #000; color:white; padding-left:10px ;font-size:35px!important">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/adminApp/index.php" style="color:white!important">Rennes Sports Club</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation" style="background-color: white !important;"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="../category_list.php">Catégories</a></li>
-                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="../CoachViews/coach_list.php">Educateurs</a></li>
-                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="../MemberViews/member_list.php">Membres</a></li>
-                    <li class="nav-item"><a style="font-size: 15px!important;color:white !important; " class="nav-link"
-                            href="../ContactViews/contact_list.php">Contacts</a></li>
-                </ul>
-            </div>
+<nav class="navbar navbar-light" style="background-color: #000; color: white; padding-left: 10px; font-size: 35px !important;">
+    <div class="container px-4 px-lg-5 d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/adminApp/index.php" style="color: white !important">Rennes Sports Club</a>
+        <div class="d-flex">
+            <a style="font-size: 15px !important; color: white !important; margin-right: 20px;" class="nav-link" href="../category_list.php">Catégories</a>
+            <a style="font-size: 15px !important; color: white !important; margin-right: 20px;" class="nav-link" href="../CoachViews/coach_list.php">Educateurs</a>
+            <a style="font-size: 15px !important; color: white !important; margin-right: 20px;" class="nav-link" href="../MemberViews/member_list.php">Membres</a>
+            <a style="font-size: 15px !important; color: white !important;" class="nav-link" href="../ContactViews/contact_list.php">Contacts</a>
         </div>
-    </nav>
+    </div>
+</nav>
+
+
 
 
     <div class="container">
@@ -63,11 +54,13 @@
         }
         ?>
         <h2 class="page-title text-center">Gestion des licenciés</h2>
+        <!-- export Members Button -->
+        <div class="d-flex justify-content-start">
+    <a href="/adminApp/export_members.php" class="btn btn-dark mb-3" style="width: 200px; margin-right: 10px;">Exporter en CSV</a>
 
-        <!-- Add New Member Button -->
-        <div class="text-center">
-    <button type="button" class="btn btn-dark mb-3" style="width: 120px; display: block; margin: 0 auto;" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter</button>
+    <button type="button" class="btn btn-dark mb-3" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Ajouter</button>
 </div>
+
         <!-- Add Member Modal -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
             aria-hidden="true">
@@ -105,7 +98,6 @@
                 require_once("/xampp/htdocs/adminApp/DAO/ContactDAO.php");  
                 $categoryDAO = new CategoryDAO($conn);
                 $contactDAO = new ContactDAO($conn);
-
                 $MemberDAO = new MemberDAO($conn);
                 $members=$MemberDAO->getAll($categoryDAO,$contactDAO);
                 
@@ -118,7 +110,7 @@
                     <td><?= $member->getCategory()->getName(); ?></td>
                     <td>
                         <!-- Update Button -->
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<?= $member->getLicenseNumber(); ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#updateModal<?= $member->getLicenseNumber(); ?>">
     Modifier
 </button>
                         <!-- Delete Button -->

@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         // Creating a Coach object
         $category = $CategoryDAO->getByName($categoryName);
         $contact = new Contact(null, $firstname, $lastname, $email, $phoneNumber);
-        $coach = new Coach($licenseNumber, $firstname, $lastname, $contact, $category, $email, $password,$isAdmin);
+        $coach = new Coach(NULL, $firstname, $lastname, $contact, $category, $email, $password,false);
 
         // Using the DAO to create a coach
         if ($coachDAO->create($coach)) {
@@ -94,16 +94,19 @@ if (isset($_POST['submit'])) {
             </select>
         </div>
 
-                <div class="field">
-                    <input type="submit" style="background-color:#0d6efd!important" class="btn" name="submit" value="Register" required>
-                </div>
+        <div class="field">
+    <input type="submit" style="background-color:#0d6efd!important" class="btn" name="submit" value="Register" onclick="window.location.href='/adminApp/login.php'" required>
+</div>
                 <div class="links">
                     Déjà un licencié ? <a href="index.php">Se connecter</a>
                 </div>
             </form>
         </div>
     </div>
+    <script>
 
+
+</script>
    
 </body>
 </html>

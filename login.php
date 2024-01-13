@@ -21,27 +21,32 @@
                     $password = htmlspecialchars($_POST['password']);
 
                     try {
-                        $stmt = $conn->prepare("SELECT * FROM coaches WHERE Email = :email AND Password = :password");
+                        $stmt = $conn->prepare("SELECT * FROM coaches WHERE email = :email AND password = :password AND isAdmin = 1");
                         $stmt->bindParam(':email', $email);
                         $stmt->bindParam(':password', $password);
+
+
                         $stmt->execute();
                         
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
                         if($row){
-                            $_SESSION['valid'] = $row['email'];
-                            $_SESSION['username'] = $row['firstName'];
-                   
-                            $_SESSION['id'] = $row['licenseNumber'];
+                            // Vérifiez si l'utilisateur est un administrateur
+                            if ($row['isAdmin'] == 1) {
+                                $_SESSION['valid'] = $row['email'];
+                                $_SESSION['username'] = $row['firstName'];
+                                $_SESSION['id'] = $row['licenseNumber'];
+                                header("Location:../adminApp/Views/MemberViews/member_list.php");
+                                exit();
+                            } else {
+                                echo "<div class='message'>
+                                        <p>Vous n'avez pas les droits d'administrateur.</p>
+                                    </div> <br>";
+                            }
                         } else {
                             echo "<div class='message'>
-                                    <p>Wrong Username or Password</p>
+                                    <p>Identifiant ou mot de passe incorrect.</p>
                                 </div> <br>";
-                            echo "<a href='index.php'><button class='btn'>Go Back</button>";
-                        }
-
-                        if(isset($_SESSION['valid'])){
-                            header("Location: home.php");
+                            echo "<a href='index.php'><button class='btn'>Retour</button>";
                         }
                     } catch(PDOException $e) {
                         echo "Error: " . $e->getMessage();
