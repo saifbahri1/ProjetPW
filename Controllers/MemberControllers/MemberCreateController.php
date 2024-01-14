@@ -1,7 +1,7 @@
 <?php
 include("/xampp/htdocs/adminApp/DAO/MemberDAO.php"); 
-include("/xampp/htdocs/adminApp/DAO/ContactDAO.php"); 
-include("/xampp/htdocs/adminApp/DAO/CategoryDAO.php"); 
+require_once("/xampp/htdocs/adminApp/DAO/ContactDAO.php"); 
+require_once("/xampp/htdocs/adminApp/DAO/CategoryDAO.php"); 
 include("/xampp/htdocs/adminApp/config.php");
 
 

@@ -1,5 +1,13 @@
 <?php
 require_once("/xampp/htdocs/adminApp/Models/Member.php");
+include("/xampp/htdocs/adminApp/config.php");
+
+require_once("/xampp/htdocs/adminApp/DAO/CategoryDAO.php");  
+require_once("/xampp/htdocs/adminApp/DAO/ContactDAO.php");  
+
+$CategoryDAO = new CategoryDAO($conn);
+$contactDAO = new ContactDAO($conn);
+
 class MemberDAO {
     private $conn;
 
@@ -54,13 +62,13 @@ class MemberDAO {
 public function update(Member $member) {
     try {
         // Assurez-vous que la table `members` existe et contient les colonnes nécessaires
-        $stmt = $this->conn->prepare("UPDATE members SET licenseNumber = ?, firstName = ?, lastName = ? WHERE id = ?");
-        $stmt->execute([$member->getLicenseNumber(), $member->getFirstName(), $member->getLastName(), $member->getLicenseNumber()]);
+        $stmt = $this->conn->prepare("UPDATE members SET  firstName = ?, lastName = ?,category = ? WHERE licenseNumber = ?");
+        $stmt->execute([ $member->getFirstName(), $member->getLastName(),$member->getCategory()->getIdCategory(), $member->getLicenseNumber()]);
 
         // Mettre à jour les détails de contact dans la table `contacts`
         $contact = $member->getContact();
-        $stmt = $this->conn->prepare("UPDATE contacts SET email = ?, phoneNumber = ? WHERE memberId = ?");
-        $stmt->execute([$contact->getEmail(), $contact->getPhoneNumber(), $member->getLicenseNumber()]);
+        $stmt = $this->conn->prepare("UPDATE contacts SET email = ?, phoneNumber = ? WHERE id = ?");
+        $stmt->execute([$contact->getEmail(), $contact->getPhoneNumber(), $contact->getIdContact()]);
         return true;
     } catch (PDOException $e) {
         // Gérer les erreurs de mise à jour ici
@@ -94,7 +102,7 @@ public function getByLicenseNumber($licenseNumber,$CategoryDAO,$contactDAO) {
 public function delete(Member $member) {
     try {
         // Supprimer les détails de contact dans la table `contacts`
-        $stmt = $this->conn->prepare("DELETE FROM contacts WHERE memberId = ?");
+        $stmt = $this->conn->prepare("DELETE FROM contacts WHERE id = ?");
         $stmt->execute([$member->getLicenseNumber()]);
 
         // Supprimer le membre de la table `members`
@@ -110,14 +118,14 @@ public function delete(Member $member) {
 
 // Méthode pour obtenir l'ID du contact associé à un membre
 private function getContactIdByLicenseNumber($licenseNumber) {
-    $stmt = $this->conn->prepare("SELECT idContact FROM members WHERE licenseNumber = ?");
+    $stmt = $this->conn->prepare("SELECT contact FROM members WHERE licenseNumber = ?");
     $stmt->execute([$licenseNumber]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $result['idContact'] ?? null;
+    return $result;
 }
 // Méthode pour supprimer un membre par son numéro de licence
-public function deleteByLicenseNumber($licenseNumber) {
+public function deleteByLicenseNumber($licenseNumber,$contactDAO) {
     try {
         // Supprimer le membre de la table des membres
         $stmt = $this->conn->prepare("DELETE FROM members WHERE licenseNumber = ?");
@@ -128,7 +136,7 @@ public function deleteByLicenseNumber($licenseNumber) {
 
         // Supprimer le contact de la table des contacts
         if ($contactId) {
-          //  $this->ContactDAO->deleteById($contactId);
+       $this->    $contactDAO->deleteById($contactId);
         }
 
         return true;

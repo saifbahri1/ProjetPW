@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
     $categoryName = $_POST['category'];
 
     // Verifying the unique email
-    $verify_query = $coachDAO->getByEmail($email, $ContactDAO, $CategoryDAO);
-
+    //$verify_query = $coachDAO->getByEmail($email, $ContactDAO, $CategoryDAO);
+    $verify_query=false;
     if ($verify_query) {
         // Display a pop-up with the error message
         echo '<script>alert("This email is already used. Please try another one.");</script>';
@@ -33,15 +33,7 @@ if (isset($_POST['submit'])) {
 
         // Using the DAO to create a coach
         if ($coachDAO->create($coach)) {
-            echo "<div class='message'>
-                      <p>Registration successfully!</p>
-                  </div> <br>";
-            echo "<a href='index.php'><button class='btn'>Login Now</button>";
-        } else {
-            echo "<div class='message'>
-                      <p>Error occurred during registration</p>
-                  </div> <br>";
-            echo "<a href='javascript:self.history.back()'><button class='btn'>Go Back</button>";
+          header("Location: /adminApp/login.php");
         }
     }
 } else {

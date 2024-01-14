@@ -102,7 +102,7 @@ public function getByemail($email,$ContactDAO,$CategoryDAO) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         
-        $category= $CategoryDAO->getByid($row['category']);
+        $category= $CategoryDAO->getById($row['category']);
 
         $contact= $ContactDAO->getByemail($email);
         if ($row) {
